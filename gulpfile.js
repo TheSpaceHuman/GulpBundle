@@ -17,7 +17,7 @@ var clean = require('gulp-clean');
 
 
 gulp.task('style', function() {
-  gulp.src('src/sass/style.scss')
+  gulp.src('src/sass/style.{sass,scss}')
 
       .pipe(plumber())
       .pipe(sass())
@@ -76,7 +76,7 @@ gulp.task('sprite', function () {
         inlineSvg: true
       }))
       .pipe(rename('sprite.svg'))
-      .pipe(gulp.dest('build/img'))
+      .pipe(gulp.dest('src/img'))
 });
 
 gulp.task('posthtml', function () {
@@ -105,6 +105,6 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function (done) {
-  run('clean','style','pug','sprite','imagemin' ,'copy','serve' , done);
+  run('clean','style','pug','sprite','imagemin', 'copy','serve' , done);
 });
 
