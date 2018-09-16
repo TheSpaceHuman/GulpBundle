@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Circe-Thin';
+  src: url('Circe-Thin.eot');
+  src: url('Circe-Thin.woff2') format('woff2'),
+       url('Circe-Thin.woff') format('woff'),
+       url('Circe-Thin.svg#Circe-Thin') format('svg'),
+       url('Circe-Thin.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

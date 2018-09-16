@@ -2,8 +2,8 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var plumber = require('gulp-plumber');
 var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
-var server = require('browser-sync');
+var autoprefixer = require('gulp-autoprefixer');
+var server = require('browser-sync').create();
 var minify = require('gulp-csso');
 var rename = require('gulp-rename');
 var imagemin = require('gulp-imagemin');
@@ -16,14 +16,15 @@ var pug = require('gulp-pug');
 var clean = require('gulp-clean');
 
 
-gulp.task('style', function() {
-  gulp.src('src/sass/style.{sass,scss}')
 
+gulp.task('style', function() {
+  return gulp.src('src/sass/style.{sass,scss}')
       .pipe(plumber())
       .pipe(sass())
-      .pipe(postcss([
-          autoprefixer()
-      ]))
+      .pipe(autoprefixer({
+        browsers: ['last 2 versions'],
+        cascade: false
+      }))
 
       .pipe(gulp.dest('build/css/'))
       .pipe(minify())
@@ -33,7 +34,7 @@ gulp.task('style', function() {
 });
 
 gulp.task('pug', function() {
-  gulp.src('src/pug/index.pug')
+  return gulp.src('src/pug/*.pug')
 
       .pipe(plumber())
       .pipe(pug())
@@ -43,13 +44,14 @@ gulp.task('pug', function() {
       .pipe(server.stream())
 });
 
-gulp.task('serve', ['style','pug'], function () {
+gulp.task('server', function () {
   server.init({
     server: 'build/'
   });
 
   gulp.watch('src/sass/**/*.{sass,scss}', ['style']);
-  gulp.watch('src/pug/**/*.pug', ['pug']);
+  gulp.watch('src/js/**/*.js', ['js']);
+  gulp.watch('src/pug/**/*.pug', ['pug']).on('change', server.reload);
 });
 
 gulp.task('imagemin', function () {
@@ -89,22 +91,34 @@ gulp.task('posthtml', function () {
 
 gulp.task('copy', function () {
   return gulp.src([
-    'src/fonts/**/*.{woff,woff2,ttf,eot}',
-    'src/js/**/*.js',
-    'src/libs/**/*.*'
+  'src/fonts/**/*.{woff,woff2,ttf,eot}',
+  'src/libs/**/*.*'
   ],{
     base:'src'
   })
       .pipe(gulp.dest('build'))
 });
 
+gulp.task('js', function () {
+  return gulp.src([
+    'src/js/**/*.js'
+  ],{
+    base:'src'
+  })
+      .pipe(gulp.dest('build'))
+      .pipe(server.stream())
+});
+
+
 gulp.task('clean', function () {
-  gulp.src('build')
-      .pipe(clean())
+    return gulp.src('build')
+        .pipe(clean())
 
 });
 
-gulp.task('build', function (done) {
-  run('clean','style','pug','sprite','imagemin', 'copy','serve' , done);
+
+gulp.task('build', function (callback) {
+  run('clean', 'copy', 'style', 'pug','js','sprite','imagemin', 'server', callback);
 });
+
 
