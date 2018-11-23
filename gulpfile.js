@@ -14,6 +14,7 @@ var include = require('posthtml-include');
 var run = require('run-sequence');
 var pug = require('gulp-pug');
 var clean = require('gulp-clean');
+var htmlbeautify = require('gulp-html-beautify');
 
 
 
@@ -38,6 +39,7 @@ gulp.task('pug', function() {
 
       .pipe(plumber())
       .pipe(pug())
+      .pipe(htmlbeautify())
 
 
       .pipe(gulp.dest('build'))
