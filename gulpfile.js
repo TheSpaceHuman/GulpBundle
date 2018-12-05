@@ -14,6 +14,8 @@ var include = require('posthtml-include');
 var run = require('run-sequence');
 var pug = require('gulp-pug');
 var clean = require('gulp-clean');
+var htmlbeautify = require('gulp-html-beautify');
+var uglify = require('gulp-uglify');
 
 
 
@@ -38,8 +40,9 @@ gulp.task('pug', function() {
 
       .pipe(plumber())
       .pipe(pug())
-
-
+      .pipe(htmlbeautify(
+          {indentSize: 2}
+      ))
       .pipe(gulp.dest('build'))
       .pipe(server.stream())
 });
@@ -105,6 +108,10 @@ gulp.task('js', function () {
   ],{
     base:'src'
   })
+      .pipe(rename('js/script.js'))
+      .pipe(gulp.dest('build'))
+      .pipe(uglify())
+      .pipe(rename('js/script.min.js'))
       .pipe(gulp.dest('build'))
       .pipe(server.stream())
 });
@@ -118,7 +125,7 @@ gulp.task('clean', function () {
 
 
 gulp.task('build', function (callback) {
-  run('clean', 'copy', 'style', 'pug','js','sprite','imagemin', 'server', callback);
+  run('clean', 'copy', 'style', 'pug','js','sprite','webp','imagemin', 'server', callback);
 });
 
 

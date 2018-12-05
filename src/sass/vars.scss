@@ -1,8 +1,10 @@
-//Optimaze
+/* Variables */
+$accent : #7b5265;
+$hover: #424c54;
+/* Remove def style */
 html {
   margin: 0;
   padding: 0;
-
 }
 body {
   margin: 0;
@@ -21,7 +23,7 @@ p {
   padding: 0;
 }
 img {
-  width: auto;
+  width: 100%;
   height: auto;
 }
 ul,ol, li {
@@ -29,8 +31,11 @@ ul,ol, li {
   padding: 0;
   list-style: none;
 }
-a:hover {
+a {
   color: black;
+}
+a:hover {
+  color: $hover;
   text-decoration: none;
 }
 //Fonts
@@ -74,17 +79,9 @@ a:hover {
   font-weight: 800;
   font-style: normal;
 }
-/* Variables */
-$red1 : #d9001b;
-$red2 : #ee0b0b;
-$dark1 : #202020;
-$dark2 : #343434;
-$dark3 : #414042;
-$gray1 : #606060;
-$gray2 : #a0a0a0;
-$gray3 : #c6c6c6;
-$gray4 : #d3d3d3;
-
+* {
+  transition: all .3s;
+}
 
 
 

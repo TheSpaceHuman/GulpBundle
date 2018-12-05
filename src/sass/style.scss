@@ -1,3 +1,5 @@
+/*===========normalize=========*/
+@import "blocks/normalize";
 /*===========VARS=========*/
 @import "vars";
 /*========HEADER==========*/
@@ -6,5 +8,7 @@
 @import "blocks/main";
 /*============FOOTER============*/
 @import "blocks/footer";
+/*============MEDIA============*/
+@import "blocks/media";
 /*===============ANIMATION==============*/
 @import "blocks/animation";

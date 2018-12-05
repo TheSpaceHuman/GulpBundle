@@ -1,4 +1,4 @@
-# gulp-template
+# Gulp-Bundle
 Base bundle for templates
 
 # Start
